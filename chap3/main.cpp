@@ -6,7 +6,7 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 	//DXライブラリ初期化
 	if (DxLib_Init() == -1) return -1;
 	//ボックスを描画
-	DrawBox(0, 0, 120, 120, 0x00FFFF, TRUE);
+	DrawBox(520, 360, 640, 480, 0x00FFFF, TRUE);
 	//待機
 	WaitKey();
 	//DXライブラリの終了処理
