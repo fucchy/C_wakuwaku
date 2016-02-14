@@ -8,7 +8,9 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 
 	//‰æ‘œ‚ğ“Ç‚İ‚İ
 	int ghandle = LoadGraph("media\\smp1_chara01.png");
-	DrawGraph(0, 0, ghandle, TRUE);
+	for (int x = 0; x < 320; x++) {
+		DrawGraph(x, 224, ghandle, TRUE);
+	}
 
 	//‘Ò‹@
 	WaitKey();
