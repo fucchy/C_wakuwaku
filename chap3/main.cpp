@@ -8,9 +8,12 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 
 	//‰æ‘œ‚ğ“Ç‚İ‚İ
 	int ghandle = LoadGraph("media\\smp1_chara01.png");
+	int x = 0;
+
 	SetDrawScreen(DX_SCREEN_BACK); //ƒEƒ‰‰æ–Ê‚ğ•`‰æ‘ÎÛ‚É‚·‚é
-	for (int x = 0; x < 320; x++) {
+	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
 		ClearDrawScreen(); //‰æ–ÊÁ‹
+		if (x <= 320) x += 1;
 		DrawGraph(x, 224, ghandle, TRUE);
 		ScreenFlip(); //‰æ–Ê“ü‚ê‘Ö‚¦
 	}
