@@ -13,12 +13,15 @@ GameState g_gamestate = GAME_TITLE; //ゲーム状態を記録する変数
 int g_gametitleimg; //タイトルイメージ
 int g_heroimg; //画像
 float g_hx = 0, g_hy = 0; //座標
+//ボタン
+BOOL g_akey_prev; //直前のAボタンの状態
 
 //関数プロトタイプ宣言
 void DrawGameTitle();
 void DrawGameMain();
 void DrawGameClear();
 void DrawGameOver();
+BOOL IsAKeyTrigger(int key);
 
 int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 	//ウィンドウズモードにする
@@ -72,6 +75,9 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 void DrawGameTitle() {
 	DrawBox(0, 0, 800, 600, GetColor(255, 255, 255), TRUE);
 	DrawGraph(0, 0, g_gametitleimg, TRUE);
+	//キーをチェックして画面を切り替え
+	int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+	if (IsAKeyTrigger(key) == TRUE) g_gamestate = GAME_MAIN;
 }
 
 //ゲーム本編描画
@@ -94,4 +100,18 @@ void DrawGameClear() {
 //ゲームオーバー画面描画
 void DrawGameOver() {
 
+}
+
+//キートリガー処理
+BOOL IsAKeyTrigger(int key){
+	if (key & PAD_INPUT_A) {
+		if (g_akey_prev == FALSE) {
+			g_akey_prev = TRUE;
+			return TRUE;
+		}
+	}
+	else {
+		g_akey_prev = FALSE;
+	}
+	return FALSE;
 }
