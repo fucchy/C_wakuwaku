@@ -4,6 +4,7 @@
 //時間計測用変数
 int g_lasttime = 0; //直前の計測時間
 float g_frametime = 0; //1ループにかかった時間
+int g_timerstart; //タイマー用変数
 enum GameState //ゲーム状態
 {
 	GAME_TITLE, GAME_MAIN, GAME_CLEAR, GAME_OVER
@@ -17,6 +18,7 @@ float g_hx = 0, g_hy = 0; //座標
 BOOL g_akey_prev; //直前のAボタンの状態
 //フォント
 int g_middlefont; //中サイズフォントハンドル
+int g_largefont; //大サイズフォントハンドル
 
 //関数プロトタイプ宣言
 void DrawGameTitle();
@@ -36,7 +38,16 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 	//画像を読み込み
 	g_gametitleimg = LoadGraph("media\\smp1_title.png");
 	g_heroimg = LoadGraph("media\\smp1_chara01.png");
-	g_middlefont = CreateFontToHandle("メイリオ", 42, -1, DX_FONTTYPE_ANTIALIASING);
+	g_middlefont = CreateFontToHandle(
+		"メイリオ",
+		42,
+		-1,
+		DX_FONTTYPE_ANTIALIASING);
+	g_largefont = CreateFontToHandle(
+		"メイリオ",
+		90,
+		-1,
+		DX_FONTTYPE_ANTIALIASING);
 
 	SetDrawScreen(DX_SCREEN_BACK); //ウラ画面を描画対象にする
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
@@ -105,6 +116,11 @@ void DrawGameMain() {
 	if (key & PAD_INPUT_LEFT)	g_hx -= mv;
 	if (key & PAD_INPUT_RIGHT)	g_hx += mv;
 	DrawGraph(g_hx, g_hy, g_heroimg, TRUE);
+	//Zキーをチェックして画面を切り替え
+	if (IsAKeyTrigger(key) == TRUE) {
+		g_gamestate = GAME_OVER;
+		g_timerstart = g_lasttime; //タイマーセット
+	}
 }
 
 //ゲームクリア画面描画
@@ -114,7 +130,15 @@ void DrawGameClear() {
 
 //ゲームオーバー画面描画
 void DrawGameOver() {
-
+	//テキスト表示
+	DrawStringToHandle(
+		100,
+		400,
+		"ゲームオーバー",
+		GetColor(255, 0, 0),
+		g_largefont);
+	//5秒経ったらタイトル画面へ
+	if (g_lasttime - g_timerstart > 5000) g_gamestate = GAME_TITLE;
 }
 
 //キートリガー処理
