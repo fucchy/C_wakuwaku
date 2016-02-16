@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include "gamemain.h"
 
 //グローバル変数
 //時間計測用変数
@@ -121,6 +122,7 @@ void DrawGameMain() {
 		g_gamestate = GAME_OVER;
 		g_timerstart = g_lasttime; //タイマーセット
 	}
+	GameMain();
 }
 
 //ゲームクリア画面描画
