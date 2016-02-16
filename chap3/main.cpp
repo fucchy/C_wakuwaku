@@ -15,6 +15,8 @@ int g_heroimg; //画像
 float g_hx = 0, g_hy = 0; //座標
 //ボタン
 BOOL g_akey_prev; //直前のAボタンの状態
+//フォント
+int g_middlefont; //中サイズフォントハンドル
 
 //関数プロトタイプ宣言
 void DrawGameTitle();
@@ -34,6 +36,7 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 	//画像を読み込み
 	g_gametitleimg = LoadGraph("media\\smp1_title.png");
 	g_heroimg = LoadGraph("media\\smp1_chara01.png");
+	g_middlefont = CreateFontToHandle("メイリオ", 42, -1, DX_FONTTYPE_ANTIALIASING);
 
 	SetDrawScreen(DX_SCREEN_BACK); //ウラ画面を描画対象にする
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
@@ -75,6 +78,18 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 void DrawGameTitle() {
 	DrawBox(0, 0, 800, 600, GetColor(255, 255, 255), TRUE);
 	DrawGraph(0, 0, g_gametitleimg, TRUE);
+	DrawStringToHandle(
+		100,
+		400,
+		"Zキーでゲームスタート", 
+		GetColor(255, 0, 255),
+		g_middlefont);
+	DrawStringToHandle(
+		100,
+		460,
+		"カーソルキーで上下左右に移動",
+		GetColor(0, 0, 0),
+		g_middlefont);
 	//キーをチェックして画面を切り替え
 	int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 	if (IsAKeyTrigger(key) == TRUE) g_gamestate = GAME_MAIN;
