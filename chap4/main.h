@@ -3,6 +3,7 @@
 
 #include <DxLib.h>
 #include "gamemain.h"
+#include "loading.h"
 
 //グローバル変数
 //時間計測用変数

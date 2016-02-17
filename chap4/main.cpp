@@ -33,6 +33,7 @@ int WINAPI WinMain(HINSTANCE h1, HINSTANCE hp, LPSTR lpC, int nC) {
 	if (DxLib_Init() == -1) return -1;
 
 	//‰æ‘œ‚ğ“Ç‚İ‚İ
+	if (LoadGameImage() == FALSE) return -1;
 	g_gametitleimg = LoadGraph("media\\smp1_title.png");
 	g_heroimg = LoadGraph("media\\smp1_chara01.png");
 	g_middlefont = CreateFontToHandle(
