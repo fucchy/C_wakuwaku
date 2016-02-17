@@ -6,6 +6,7 @@
 struct ImageHandles
 {
 	int field; //背景の草原
+	int mapitems[10]; //マップ上のアイテム
 };
 extern ImageHandles g_imghandles;
 
