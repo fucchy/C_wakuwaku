@@ -1,17 +1,13 @@
 #include <DxLib.h>
 #include "gamemain.h"
+#include "main.h"
 
-//グローバル変数
-//時間計測用変数
 int g_lasttime = 0; //直前の計測時間
 float g_frametime = 0; //1ループにかかった時間
 int g_timerstart; //タイマー用変数
-enum GameState //ゲーム状態
-{
-	GAME_TITLE, GAME_MAIN, GAME_CLEAR, GAME_OVER
-};
 
 GameState g_gamestate = GAME_TITLE; //ゲーム状態を記録する変数
+
 int g_gametitleimg; //タイトルイメージ
 int g_heroimg; //画像
 float g_hx = 0, g_hy = 0; //座標
@@ -109,19 +105,7 @@ void DrawGameTitle() {
 
 //ゲーム本編描画
 void DrawGameMain() {
-	//自キャラ移動
-	int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-	float mv = 80.0f * g_frametime; //移動量計算
-	if (key & PAD_INPUT_UP)		g_hy -= mv;
-	if (key & PAD_INPUT_DOWN)	g_hy += mv;
-	if (key & PAD_INPUT_LEFT)	g_hx -= mv;
-	if (key & PAD_INPUT_RIGHT)	g_hx += mv;
-	DrawGraph(g_hx, g_hy, g_heroimg, TRUE);
-	//Zキーをチェックして画面を切り替え
-	if (IsAKeyTrigger(key) == TRUE) {
-		g_gamestate = GAME_OVER;
-		g_timerstart = g_lasttime; //タイマーセット
-	}
+
 	GameMain();
 }
 
